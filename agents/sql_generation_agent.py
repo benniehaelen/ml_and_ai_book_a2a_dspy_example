@@ -28,7 +28,7 @@ class TextToSQL(dspy.Signature):
     """Convert natural language requirements to SQL queries"""
     
     requirement = dspy.InputField(desc="Natural language description of query")
-    schema = dspy.InputField(desc="Database schema information")
+    db_schema = dspy.InputField(desc="Database schema information")
     business_rules = dspy.InputField(desc="Business logic and calculation rules")
     
     sql_query = dspy.OutputField(desc="Complete, executable SQL query")
@@ -45,12 +45,12 @@ class SQLGenerationProgram(dspy.Module):
     def forward(
         self, 
         requirement: str, 
-        schema: str, 
+        db_schema: str, 
         business_rules: str = ""
     ) -> dspy.Prediction:
         return self.generate(
             requirement=requirement,
-            schema=schema,
+            db_schema=db_schema,
             business_rules=business_rules
         )
 
@@ -217,7 +217,7 @@ class SQLGenerationAgent(A2AServer):
             # Use DSPy program
             result = self.sql_program(
                 requirement=requirement,
-                schema=schema_prompt,
+                db_schema=schema_prompt,
                 business_rules=business_rules
             )
             

@@ -425,7 +425,7 @@ class StandaloneOrchestrator:
         
         sql_result = self.sql_program(
             requirement=question,
-            schema=get_schema_prompt(),
+            db_schema=get_schema_prompt(),
             business_rules=""
         )
         
